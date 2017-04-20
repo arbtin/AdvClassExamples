@@ -1,0 +1,77 @@
+@model IEnumerable<UsingRazor.Models.Product>
+
+@{
+    Layout = null;
+    bool check = false;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                Name
+            </td>
+            <td>
+                Desc
+            </td>
+            <td>
+                Cat
+            </td>
+            <td>
+                Price
+            </td>
+        </tr>
+        @{check = Model.Any(p => p.Category == "Offroad"); }
+
+        @if (!check)
+        {
+            <p>We sell ATVs also.</p>
+        }
+
+        @foreach (var item in Model.Where(p => p.Category == "Watersports"))
+        {
+            <tr><td>@item.Name </td>
+                <td>@item.Description </td><td>@item.Category </td>
+                <td>@item.Price </td>
+        </tr>
+
+        }
+    </table>
+    <table>
+        <tr>
+            <td>
+                Name
+            </td>
+            <td>
+                Desc
+            </td>
+            <td>
+                Cat
+            </td>
+            <td>
+                Price
+            </td>
+        </tr>
+
+        @foreach (var item in Model.Where(p => p.Category == "Offroad"))
+        {
+            <tr>
+                <td>@item.Name </td>
+                <td>@item.Description </td>
+                <td>@item.Category </td>
+                <td>@item.Price </td>
+            </tr>
+
+        }
+
+    </table>
+
+</body>
+</html>

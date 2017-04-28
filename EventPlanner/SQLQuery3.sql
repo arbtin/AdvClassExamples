@@ -1,0 +1,12 @@
+INSERT INTO [dbo].[Species] ([EntityId],
+	[SciName],
+	[ComName],
+	[StatusId],
+	[SpCode],
+	[VipCode],
+	[PopAbbrev],
+	[PopDesc],
+	[TSN],
+	[CountryId],
+	[ListingDate])
+VALUES(1,'Myotis sodalis','Indiana bat',1,'A000','V01','Wherever found','Wherever found',180001,1,'03/11/1967'),											

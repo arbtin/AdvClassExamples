@@ -1,0 +1,34 @@
+﻿@model IEnumerable<VisualStudioFeatures.Models.Product>
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Visual Studio Features</title>
+
+    <link rel="stylesheet" href="css/first.css" />
+    <link rel="stylesheet" href="css/second.css" />
+    <script src="js/third.js"> </script>
+    <script src="js/fourth.js"> </script></head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&emsp;Test  One&nbsp;Two</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Name </td>
+                    <td>
+                        @p.Price
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

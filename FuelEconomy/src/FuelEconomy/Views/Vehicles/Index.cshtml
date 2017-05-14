@@ -1,0 +1,155 @@
+@model IEnumerable<FuelEconomy.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+    SelectList fylist = ViewBag.FySelectList;
+    SelectList cyclist = ViewBag.CycSelectList;
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cylinders)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityMilage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Displacement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriveId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuelCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuelTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HywayMilage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MakeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransmissionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleClassId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                <form method="post" id="filter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("cycFilter", cyclist, "All", new { @class = "form-control", @style = "width: 6rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriveId)
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuelTypeId)
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MakeId)
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransmissionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleClassId)
+            </th>
+            <th>
+                <form method="post" id="filter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("fyFilter", fylist, "All", new { @class = "form-control", @style = "width: 6rem; display:inline-block" })
+                </form>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cylinders.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityMilage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Displacement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drive.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelType.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HywayMilage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Make.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transmission.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleClass.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+$(document).ready(function(){
+    $("#fyFilter").change(function () {
+        $("#filter").submit();
+    });
+    $("#cycFilter").change(function () {
+        $("#filter").submit();
+    });
+});
+    </script>
+}

@@ -1,0 +1,111 @@
+@model FuelEconomy.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Vehicle</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="CityMilage" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CityMilage" class="form-control" />
+                <span asp-validation-for="CityMilage" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CylindersId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="CylindersId" class ="form-control" asp-items="ViewBag.CylindersId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Displacement" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Displacement" class="form-control" />
+                <span asp-validation-for="Displacement" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DriveId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DriveId" class="form-control" />
+                <span asp-validation-for="DriveId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FuelCost" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FuelCost" class="form-control" />
+                <span asp-validation-for="FuelCost" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FuelTypeId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FuelTypeId" class="form-control" />
+                <span asp-validation-for="FuelTypeId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="HywayMilage" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="HywayMilage" class="form-control" />
+                <span asp-validation-for="HywayMilage" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MakeiId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MakeiId" class="form-control" />
+                <span asp-validation-for="MakeiId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Model" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TransmissionId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TransmissionId" class="form-control" />
+                <span asp-validation-for="TransmissionId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="VehicleClassId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="VehicleClassId" class="form-control" />
+                <span asp-validation-for="VehicleClassId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="YearId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="YearId" class="form-control" />
+                <span asp-validation-for="YearId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

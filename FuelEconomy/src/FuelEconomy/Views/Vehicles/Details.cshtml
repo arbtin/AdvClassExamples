@@ -1,0 +1,84 @@
+@model FuelEconomy.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CityMilage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CityMilage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Displacement)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Displacement)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DriveId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DriveId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FuelCost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FuelCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FuelTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FuelTypeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HywayMilage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HywayMilage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MakeiId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MakeiId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransmissionId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransmissionId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleClassId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VehicleClassId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.YearId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.YearId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

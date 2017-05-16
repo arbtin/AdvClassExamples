@@ -1,4 +1,4 @@
-INSERT INTO [dbo].[Make] 
+INSERT INTO [dbo].[Make] (Label)
 VALUES ('Acura'),
 ('Alfa Romeo'),
 ('AM General'),
@@ -133,7 +133,7 @@ VALUES ('Acura'),
 ('Wallace Environmental'),
 ('Yugo')
 
-INSERT INTO [dbo].[Transmission] 
+INSERT INTO [dbo].[Transmission] (Label)
 VALUES ('Auto(AM-S6)'),
 ('Automatic (A1)'),
 ('Automatic (AM5)'),
@@ -172,7 +172,7 @@ VALUES ('Auto(AM-S6)'),
 ('Manual 6-spd'),
 ('Manual 7-spd')
 
-INSERT INTO [dbo].[VehicleClass] 
+INSERT INTO [dbo].[VehicleClass] (Label)
 VALUES ('Compact Cars'),
 ('Large Cars'),
 ('Midsize Cars'),
@@ -208,7 +208,7 @@ VALUES ('Compact Cars'),
 ('Vans, Cargo Type'),
 ('Vans, Passenger Type')
 
-INSERT INTO [dbo].[Drive] 
+INSERT INTO [dbo].[Drive] (Label)
 VALUES ('2-Wheel Drive'),
 ('4-Wheel Drive'),
 ('4-Wheel or All-Wheel Drive'),
@@ -218,7 +218,7 @@ VALUES ('2-Wheel Drive'),
 ('Rear-Wheel Drive'),
 ('NA')
 
-INSERT INTO [dbo].[FuelType] 
+INSERT INTO [dbo].[FuelType] (Label)
 VALUES ('CNG'),
 ('Diesel'),
 ('Electricity'),
@@ -234,7 +234,7 @@ VALUES ('CNG'),
 ('Regular Gas and Electricity'),
 ('Regular Gas or Electricity')
 
-INSERT INTO [dbo].[Cylinders] 
+INSERT INTO [dbo].[Cylinders] (Label)
 VALUES ('2'),
 ('3'),
 ('4'),

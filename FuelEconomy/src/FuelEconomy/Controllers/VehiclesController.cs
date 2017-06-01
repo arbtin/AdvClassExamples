@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FuelEconomy.Data;
 using FuelEconomy.Models;
+using FuelEconomy.ViewModels;
 
 namespace FuelEconomy.Controllers
 {
@@ -20,8 +21,12 @@ namespace FuelEconomy.Controllers
         }
 
         // GET: Vehicles
-        public async Task<IActionResult> Index(string searchString, int? fyFilter = 0, int? cycFilter = 0)
+        public async Task<IActionResult> Index(int fyFilter, string searchString, int? page, int? cycFilter = 0, int? drvFilter = 0)
         {
+            if (searchString != null)
+            {
+                page = 1;
+            }
             // FY 
             var fy = _context.Vehicle.Select(y => new { id = y.Year, value = y.Year }).Distinct().ToList();
             ViewBag.FySelectList = new SelectList(fy, "id", "value");
@@ -30,10 +35,46 @@ namespace FuelEconomy.Controllers
             var cylinder = _context.Cylinders.Select(y => new { id = y.Id, value = y.Label }).Distinct().ToList();
             ViewBag.CycSelectList = new SelectList(cylinder, "id", "value");
 
-            // Create an empty Event object
-            IQueryable<Vehicle> vehicles;
+            // Drive
+            var drive = _context.Drive.Select(d => new { id = d.Id, value = d.Label }).Distinct().ToList();
+            ViewBag.DrvSelectList = new SelectList(drive, "id", "value");
 
-            var all_vehicles = _context.Vehicle.Include(v => v.Cylinders).Include(v => v.Cylinders).Include(v => v.Drive).Select(v => v);
+            // FuelType
+            var fuel = _context.FuelType.Select(d => new { id = d.Id, value = d.Label }).Distinct().ToList();
+            ViewBag.fulSelectList = new SelectList(fuel, "id", "value");
+
+            // Create an empty Event object
+            IQueryable<VehicleViewModel> vehicles;
+
+            var all_vehicles = _context.Vehicle.Select(v => new VehicleViewModel()
+            {
+                Id = v.Id,
+                CylindersLabel = v.Cylinders.Label,
+                Displacement = v.Displacement,
+                DriveLabel = v.Drive.Label,
+                FuelCost = v.FuelCost,
+                FuelTypeLabel = v.FuelType.Label,
+                MakeLabel = v.Make.Label,
+                Model = v.Model,
+                TransmissionLabel = v.Transmission.Label,
+                CityMilage = v.CityMilage,
+                HywayMilage = v.HywayMilage,
+                VehicleClassLabel = v.VehicleClass.Label,
+                Year = v.Year,
+            });
+            //.Include(v => v.Cylinders)
+            //    .Include(v => v.Cylinders)
+            //    .Include(v => v.Drive)
+            //    .Include(v => v.FuelType)
+            //    .Include(v => v.Make)
+            //    .Include(v => v.Transmission)
+            //    .Include(v => v.VehicleClass)
+            //    .Select(v => v);
+
+            //var vehicles = from x in all_vehicles
+            //               where x.CylindersId in (select Id from Cylinders where Id == cycFilter)
+            //where
+            //             select x;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -50,13 +91,44 @@ namespace FuelEconomy.Controllers
             {
                 vehicles = all_vehicles.Where(s => s.CylindersId == cycFilter);
             }
+            if (drvFilter > 0)
+            {
+                vehicles = all_vehicles.Where(s => s.DriveId == drvFilter);
+            }
             else
             {
                 // do nothing, all
                 vehicles = all_vehicles.Select(s => s);
             }
 
-            return View(vehicles.ToList());
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    fyFilter = 0;
+
+            //    all_vehicles = all_vehicles.Where(v => v.Model.Contains(searchString));
+            //}
+
+            //if (fyFilter > 0)
+            //{
+            //    vehicles = all_vehicles.Where(s => s.Year == fyFilter);
+            //}
+            //if (cycFilter > 0)
+            //{
+            //    vehicles = all_vehicles.Where(s => s.CylindersId == cycFilter);
+            //}
+            //if (drvFilter > 0)
+            //{
+            //    vehicles = all_vehicles.Where(s => s.DriveId == drvFilter);
+            //}
+            //else
+            //{
+            //    // do nothing, all
+            //    vehicles = all_vehicles.Select(s => s);
+            //}
+
+            int pageSize = 25;
+            return View(await PaginatedList<VehicleViewModel>.CreateAsync(vehicles.AsNoTracking(), page ?? 1, pageSize));
+//            return View(vehicles.ToList());
         }
 
         // GET: Vehicles/Details/5

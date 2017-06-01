@@ -1,9 +1,14 @@
-@model IEnumerable<FuelEconomy.Models.Vehicle>
+@model PaginatedList<FuelEconomy.ViewModels.VehicleViewModel>
+
 
 @{
     ViewData["Title"] = "Index";
     SelectList fylist = ViewBag.FySelectList;
     SelectList cyclist = ViewBag.CycSelectList;
+    SelectList drvlist = ViewBag.DrvSelectList;
+
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
 <h2>Index</h2>
@@ -11,81 +16,46 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-responsive table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cylinders)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CityMilage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Displacement)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DriveId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuelCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuelTypeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HywayMilage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MakeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Model)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransmissionId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VehicleClassId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
+            <th>Cylinders</th>
+            <th>City Milage</th>
+            <th>Displacement</th>
+            <th>Drive</th>
+            <th>Fuel Cost</th>
+            <th>Fuel Type</th>
+            <th>Hyway Milage</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Transmission</th>
+            <th>Vehicle Class</th>
+            <th>Year</th>
             <th></th>
         </tr>
         <tr>
             <th>
-                <form method="post" id="filter" action="@Url.Action("Index", "Vehicles")">
-                    @Html.DropDownList("cycFilter", cyclist, "All", new { @class = "form-control", @style = "width: 6rem; display:inline-block" })
+                <form method="post" id="cyc" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("cycFilter", cyclist, "All", new { @class = "form-control", @style = "width: 8rem; display:inline-block" })
                 </form>
             </th>
+            <th></th>
+            <th></th>
             <th>
+                <form method="post" id="drv" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("drvFilter", drvlist, "All", new { @class = "form-control", @style = "width: 8rem; display:inline-block" })
+                </form>
             </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
             <th>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DriveId)
-            </th>
-            <th>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuelTypeId)
-            </th>
-            <th>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MakeId)
-            </th>
-            <th>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransmissionId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VehicleClassId)
-            </th>
-            <th>
-                <form method="post" id="filter" action="@Url.Action("Index", "Vehicles")">
-                    @Html.DropDownList("fyFilter", fylist, "All", new { @class = "form-control", @style = "width: 6rem; display:inline-block" })
+                <form method="post" id="fy" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("fyFilter", fylist, "All", new { @class = "form-control", @style = "width: 8rem; display:inline-block" })
                 </form>
             </th>
             <th></th>
@@ -95,7 +65,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Cylinders.Label)
+                @Html.DisplayFor(modelItem => item.CylindersLabel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CityMilage)
@@ -104,28 +74,28 @@
                 @Html.DisplayFor(modelItem => item.Displacement)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Drive.Label)
+                @Html.DisplayFor(modelItem => item.DriveLabel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FuelCost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FuelType.Label)
+                @Html.DisplayFor(modelItem => item.FuelTypeLabel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.HywayMilage)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Make.Label)
+                @Html.DisplayFor(modelItem => item.MakeLabel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Transmission.Label)
+                @Html.DisplayFor(modelItem => item.TransmissionLabel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VehicleClass.Label)
+                @Html.DisplayFor(modelItem => item.VehicleClassLabel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Year)
@@ -139,16 +109,36 @@
 }
     </tbody>
 </table>
+<div class="center-block">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled btn">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled btn">
+        Next
+    </a>
+    <span>Page @(Model.PageIndex) of @(Model.TotalPages)</span>
+</div>
 
 @section scripts
 {
     <script>
 $(document).ready(function(){
     $("#fyFilter").change(function () {
-        $("#filter").submit();
+        $("#fy").submit();
     });
     $("#cycFilter").change(function () {
-        $("#filter").submit();
+        $("#cyc").submit();
+    });
+    $("#drvFilter").change(function () {
+        $("#drv").submit();
     });
 });
     </script>

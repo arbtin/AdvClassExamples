@@ -1,0 +1,83 @@
+@model IEnumerable<EndangeredSpecies.ViewModels.CartDonationViewModel>
+
+@{
+    //ViewData["Title"] = "Index";
+}
+
+<h2>My @ViewBag.Title</h2>
+
+<p class="hidden">
+    <a asp-action="Create">Your Cart</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Common Name</th>
+            <th>@Html.DisplayNameFor(model => model.Amount)</th>
+            @if (ViewBag.Type == "cart")
+            {
+            <th></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Species.ComName)</td>
+                <td id="editAmt_@item.Id"> @Html.DisplayFor(modelItem => item.Amount)
+                @if (ViewBag.Type == "cart")
+                {
+                    <input id="@item.Id" class="btnAmt btn btn-info btn-control" type="button" value="Change" onclick="" />
+                }
+                </td>
+                <td style="display:none;" id="amntEdit_@item.Id">
+                    <form method="post" action="@Url.Action("EditAmount", "Carts")">
+                        <input type="hidden" value="@item.Id" id="Id" name="Id" />
+                        <input type="text" style="width:8rem;" value="@Html.DisplayFor(modelItem => item.Amount)" class="form-control" id="Amount" name="Amount" />
+                        <input class="btn btn-success btn-control" type="submit" value="Save" />
+                    </form>
+                </td>
+                @if (ViewBag.Type == "cart")
+                {
+                <td>
+                    @*<a asp-action="Delete" asp-route-id="@item.Id">Remove</a>*@
+                    <form asp-action="RemoveFromCart" method="post">
+                        <input type="hidden" name="Id" value="@item.Species.Id" />
+                        @*<input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />*@
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                    </form>
+                </td>
+                }
+            </tr>
+        }
+        <tr>
+    <td>
+        @ViewBag.Title Total
+    </td>
+    <td>
+        @ViewBag.AmountTotal
+    </td>
+    @if (ViewBag.Type == "cart")
+    {
+        <td><a asp-action="Donate" asp-controller="Carts">Donate Now</a></td>
+    }
+    </tr>
+    </tbody>
+</table>
+
+@section scripts
+{
+<script>
+    $(document).ready(function($){
+        $(".btnAmt").click(function () {
+            var id = $(this).attr('id');
+            var edit_amt = '#editAmt_' + id;
+            var amnt_edit = '#amntEdit_' + id;
+//            $(this).click({ param: this.id }, functionName);
+            $(amnt_edit).show();
+            $(edit_amt).hide();
+        });
+    });
+</script>
+}

@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using EndangeredSpecies.Extensions
+@using System.Security.Claims
+@using EndangeredSpecies.Models
+@using EndangeredSpecies.Controllers
+@using EndangeredSpecies.Services
+@using Microsoft.AspNetCore.Http;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject CartService CartCount
+
+@*@UserManager.GetUserName(User)*@
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @User.GetFirstName() @User.GetLastName()!</a>
+                </li>
+                <li>
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+                </li>
+            </ul>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a asp-area="" asp-controller="Carts" asp-action="Index" title="My Cart"><span class="badge" style="font-size:1.5rem;">@CartCount.GetCartCount(User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"))</span><span class="glyphicon glyphicon-shopping-cart" style="font-size:2rem; color:#fff;"></span></a></li>
+        </ul>
+    }
+    else
+    {
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a disabled="disabled"><span class="glyphicon glyphicon-shopping-cart" style="font-size:2rem; color:#666;"></span></a></li>
+    </ul>
+    }
+

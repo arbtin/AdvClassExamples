@@ -1,0 +1,96 @@
+@model EndangeredSpecies.Models.Species
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>Species Detail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EntityId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntityId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SciName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SciName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusCodeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StatusCode.Label)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SpCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VipCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PopAbbrev)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PopAbbrev)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PopDesc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PopDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TSN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TSN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryCodeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CountryCode.Label)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ListingDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ListingDate)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @if (User.Identity.IsAuthenticated == true && User.IsInRole("Admin"))
+    {
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }    <a class="btn btn-info" asp-action="Index">Back to List</a>
+        <a class="btn btn-info" asp-controller="Cart" asp-action="Add">Add To Cart</a>
+</div>

@@ -120,12 +120,12 @@ namespace EndangeredSpecies.Controllers
                     _context.Add(donation);
                 }
 
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
 
-            //await RemoveFromCartByUser(user_id);
+            RemoveFromCartByUser(user_id);
             // var donate = _context.Donation.Where(c => c.UserId == user_id);
-            return RedirectToAction("Index", "type=donation");
+            return RedirectToAction("Index");
             // View(await donate.ToListAsync());
         }
 
@@ -179,16 +179,34 @@ namespace EndangeredSpecies.Controllers
                 return RedirectToAction("Index");
             }
         }
-
+        // Helper
         public void RemoveFromCart(int id)
         {
             var cart = _context.Cart.SingleOrDefault(m => m.Id == id);
-            _context.Cart.Remove(cart);
-            _context.SaveChanges();
+            if (cart != null)
+            {
+                _context.Cart.Remove(cart);
+                _context.SaveChangesAsync();
 
-            return;
+                return;
+            }
         }
-        public async Task<IActionResult> RemoveFromCartByUser(string user_id)
+
+        public IActionResult RemoveFromCartById(int id)
+        {
+            if (id <= 0)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                RemoveFromCart(id);
+            }
+
+            return RedirectToAction("Index", new { Type = "donation" });
+        }
+
+        public IActionResult RemoveFromCartByUser(string user_id)
         {
             var cart = _context.Cart.Where(c => c.UserId == user_id);
 
@@ -202,12 +220,12 @@ namespace EndangeredSpecies.Controllers
                 foreach (var item in cart)
                 {
                     RemoveFromCart(item.Id);
+                    //_context.SaveChangesAsync();
                 }
 
-                await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction("Index", "Type=Donation");
+            return RedirectToAction("Index", new { Type = "Donation" });
         }
 
         private bool CartExists(int id)
@@ -221,7 +239,7 @@ namespace EndangeredSpecies.Controllers
             // User is not logged in
             if (!User.Identity.IsAuthenticated)
             {
-                string return_url = "/Cart/AddToCart?Id=" + Id;
+                string return_url = "/Carts/AddToCart?Id=" + Id;
                 return Content("<form action='login' id='cart_frm' method='post'><input type='hidden' name='ReturnUrl' value='" + return_url + "' /></form><script>document.getElementById('cart_frm').submit();</script>");
             }
             else
@@ -242,7 +260,7 @@ namespace EndangeredSpecies.Controllers
 
                 //cart. = 
                 _context.Add(cart);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 return RedirectToAction("Index", "Home");
             }

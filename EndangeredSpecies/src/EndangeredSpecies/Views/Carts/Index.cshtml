@@ -42,8 +42,8 @@
                 {
                 <td>
                     @*<a asp-action="Delete" asp-route-id="@item.Id">Remove</a>*@
-                    <form asp-action="RemoveFromCart" method="post">
-                        <input type="hidden" name="Id" value="@item.Species.Id" />
+                    <form asp-action="RemoveFromCartById" method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
                         @*<input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />*@
                         <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                     </form>

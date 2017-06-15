@@ -80,6 +80,7 @@
                 <td>
                     <a asp-action="AddToCart" asp-controller="Carts" asp-route-id="@item.Id"><span class="glyphicon glyphicon-shopping-cart" style="font-size:2rem; color:#aaa;"></span></a>
                     <a class="btn btn-info btn-control" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-info btn-control" data-target="partial-@item.Id" onclick="">Partial Details</a>
                     @if (User.Identity.IsAuthenticated == true && User.IsInRole("Admin"))
                     {
                         <a class="btn btn-warning btn-control" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
@@ -87,6 +88,7 @@
                     }
                 </td>
             </tr>
+            <tr><td class="hidden" id="partial-@item.Id"></td></tr>
         }
     </tbody>
 }
@@ -140,6 +142,16 @@ else
             $(this).prev('input').val('').focus();
             $(this).hide();
         });
+    });
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("PartialDetails", "Species")', // use this
+        data: { enterdNumber: enteredNum },
+        dataType: 'html', // add this
+        success: function (response) {
+            $('#someElement').html(response); // add this (adjust id to suit)
+        }
     });
     </script>
 }

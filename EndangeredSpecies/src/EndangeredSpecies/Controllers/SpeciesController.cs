@@ -93,6 +93,25 @@ namespace EndangeredSpecies.Controllers
             return View(species);
         }
 
+        public PartialViewResult PartialDetails(int? id)
+        {
+            PartialSpeciesViewModel ps = new PartialSpeciesViewModel();
+            var species_details = db_context.Species.Where(m => m.Id == id).Select(s => new PartialSpeciesViewModel()
+            {
+                Id = s.Id,
+                PopAbbrev = s.PopAbbrev,
+                PopDesc = s.PopDesc,
+                SpCode = s.SpCode,
+                TSN = s.TSN,
+                VipCode = s.VipCode,
+            });
+
+            ps = species_details.SingleOrDefault();
+            
+
+            return PartialView(ps);
+        }
+
         // GET: Species/Create
         public IActionResult Create()
         {
